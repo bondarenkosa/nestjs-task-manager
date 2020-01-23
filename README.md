@@ -1,2 +1,1 @@
-# nestjs-task-manager
-Simple task manager
+# Simple task manager
