@@ -16,7 +16,7 @@ describe('#tasks', () => {
   });
 
   it('get nonexistent task', async () => {
-    const wrongId = 'wrong-id';
+    const wrongId = '0';
     return request(app.getHttpServer())
       .get(`/tasks/${wrongId}`)
       .expect(HttpStatus.NOT_FOUND);
