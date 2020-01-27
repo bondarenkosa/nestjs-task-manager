@@ -20,6 +20,9 @@ lerna-debug.log*
 # Database
 /db
 
+# Environment
+.env
+
 # IDEs and editors
 /.idea
 .project

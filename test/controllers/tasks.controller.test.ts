@@ -15,6 +15,13 @@ describe('#tasks', () => {
       .expect(HttpStatus.OK);
   });
 
+  it('create task', async () => {
+    return request(app.getHttpServer())
+      .post('/tasks')
+      .send({ title: 'New task', description: 'this is new task' })
+      .expect(HttpStatus.CREATED);
+  });
+
   it('get nonexistent task', async () => {
     const wrongId = '0';
     return request(app.getHttpServer())
