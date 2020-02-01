@@ -1,0 +1,5 @@
+entity: User
+items:
+  user{1..2}:
+    username: 'user($current)'
+    password: 'Password123'

@@ -1,0 +1,7 @@
+entity: Task
+items:
+  task1:
+    title: '{{name.title}}'
+    description: '{{name.title}} description'
+    status: 'OPEN'
+    user: '@user($current)'

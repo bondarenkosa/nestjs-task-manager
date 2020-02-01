@@ -11,4 +11,8 @@ export default () => ({
     synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
     logging: process.env.TYPEORM_LOGGING === 'true',
   },
+  jwt: {
+    expiresIn: process.env.JWT_EXPIRES_IN || 3600,
+    secret: process.env.JWT_SECRET,
+  },
 });
