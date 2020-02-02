@@ -1,6 +1,6 @@
 export default () => ({
   server: {
-    port: parseInt(process.env.SERVER_PORT, 10) || 3000,
+    port: parseInt(process.env.PORT, 10) || 3000,
   },
   typeOrm: {
     type: process.env.TYPEORM_CONNECTION || 'postgres',
