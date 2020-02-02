@@ -7,6 +7,11 @@ import { Task } from './task.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/auth/user.entity';
 
+const sanitizeTask = (task: Task): Partial<Task> => {
+  const { user, ...result } = task;
+  return result;
+};
+
 @Injectable()
 export class TasksService {
   constructor(
@@ -43,19 +48,14 @@ export class TasksService {
     return found;
   }
 
-  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
-    const { title, description } = createTaskDto;
+  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Partial<Task>> {
+    const newTask: Task = this.taskRepository.create(createTaskDto);
+    newTask.status = TaskStatus.OPEN;
+    newTask.user = user;
 
-    const task: Task = new Task();
-    task.title = title;
-    task.description = description;
-    task.status = TaskStatus.OPEN;
-    task.user = user;
-    await task.save();
+    await newTask.save();
 
-    delete task.user;
-
-    return task;
+    return sanitizeTask(newTask);
   }
 
   async deleteTask(id: number, user: User): Promise<void> {

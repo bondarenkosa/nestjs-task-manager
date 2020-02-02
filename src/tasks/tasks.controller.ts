@@ -35,7 +35,7 @@ export class TasksController {
   createTask(
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: User,
-  ): Promise<Task> {
+  ): Promise<Partial<Task>> {
     return this.tasksService.createTask(createTaskDto, user);
   }
 
