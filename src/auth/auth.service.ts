@@ -1,29 +1,25 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
-import { Repository } from 'typeorm';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { JwtPayload } from './jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
 
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     const { username } = authCredentialsDto;
 
-    const isExists = (await this.userRepository.count({ username })) > 0;
+    const isExists = await this.usersService.isUsernameExists(username);
     if (isExists) {
       throw new BadRequestException('Username already exists');
     }
 
-    const newUser = this.userRepository.create(authCredentialsDto);
-    await newUser.save();
+    await this.usersService.createAndSave(authCredentialsDto);
   }
 
   async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ accessToken: string }> {
@@ -39,9 +35,9 @@ export class AuthService {
     return { accessToken };
   }
 
-  private async validateUserPassword(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+  private async validateUserPassword(authCredentialsDto: AuthCredentialsDto): Promise<string | null> {
     const { username, password } = authCredentialsDto;
-    const user = await this.userRepository.findOne({ username });
+    const user = await this.usersService.findOneByUsername(username);
 
     if (user && await user.validatePassword(password)) {
       return user.username;

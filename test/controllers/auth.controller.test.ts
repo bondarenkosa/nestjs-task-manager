@@ -3,7 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { createTestingApp } from '../app.testing';
 import { loadFixtures, clearDatabase } from '../fixtures.loader';
 import { Repository, getRepository } from 'typeorm';
-import { User } from '../../src/auth/user.entity';
+import { User } from '../../src/users/user.entity';
 
 describe('#tasks', () => {
   let app: INestApplication;
