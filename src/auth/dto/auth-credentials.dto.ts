@@ -4,7 +4,7 @@ export class AuthCredentialsDto {
   @IsString()
   @MinLength(4)
   @MaxLength(32)
-  username: string;
+  readonly username: string;
 
   @IsString()
   @MinLength(4)
@@ -13,5 +13,5 @@ export class AuthCredentialsDto {
     /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
     { message: 'password too weak' },
   )
-  password: string;
+  readonly password: string;
 }
