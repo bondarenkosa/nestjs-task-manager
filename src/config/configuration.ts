@@ -12,7 +12,7 @@ export default () => ({
     logging: process.env.TYPEORM_LOGGING === 'true',
   },
   jwt: {
-    expiresIn: process.env.JWT_EXPIRES_IN || 3600,
+    expiresIn: parseInt(process.env.JWT_EXPIRES_IN, 10) || 3600,
     secret: process.env.JWT_SECRET,
   },
 });
